@@ -44,7 +44,7 @@ CREATE TABLE "Patient" (
     "name" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "gender" TEXT NOT NULL,
-    "contactinfo" TEXT NOT NULL,
+    "contactInfo" TEXT NOT NULL,
     "MedicalHistory" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'Patient',
 
@@ -56,7 +56,7 @@ CREATE TABLE "Physician" (
     "physicianId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "specialization" TEXT NOT NULL,
-    "contactinfo" TEXT NOT NULL,
+    "contactInfo" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'PCP',
 
     CONSTRAINT "Physician_pkey" PRIMARY KEY ("physicianId")
@@ -82,7 +82,7 @@ CREATE TABLE "MedicalRecord" (
     "symptoms" TEXT NOT NULL,
     "allergies" TEXT NOT NULL,
     "currentSmokingStatus" TEXT NOT NULL,
-    "alcholIntake" BOOLEAN NOT NULL,
+    "alcoholIntake" BOOLEAN NOT NULL,
     "diagnosis" TEXT NOT NULL,
     "treatmentPlan" TEXT NOT NULL,
 
