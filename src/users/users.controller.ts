@@ -9,6 +9,7 @@ import {
   Param,
   ParseIntPipe,
   HttpException,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
