@@ -6,10 +6,11 @@ import {
   IsOptional,
 } from 'class-validator';
 import { PrescriptionDto } from 'src/prescription/dtos/prescription.dto';
+import { DiagnosisDto } from 'src/diagnosis/dtos/Diagnosis.dto';
+import { TestDto } from 'src/test/dtos/Test.dto';
+import { TreatmentDto } from 'src/treatment/dtos/Treatment.dto';
 
 export class MedicalRecordDto {
-  constructor(private prescriptionDto: PrescriptionDto) {}
-
   @IsUUID()
   recordId: string;
 
@@ -43,13 +44,12 @@ export class MedicalRecordDto {
   @IsOptional()
   prescriptions: PrescriptionDto[];
 
-  // Assuming Diagnosis, Test, and Treatment are similar DTOs, adjust the import paths and types accordingly
   @IsOptional()
-  diagnoses: any[];
+  diagnoses: DiagnosisDto[];
 
   @IsOptional()
-  tests: any[];
+  tests: TestDto[];
 
   @IsOptional()
-  treatments: any[];
+  treatments: TreatmentDto[];
 }
