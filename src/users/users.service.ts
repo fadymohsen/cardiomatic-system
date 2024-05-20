@@ -105,26 +105,28 @@ export class UsersService {
     });
   }
 
+  async getAllPatientsMale() {
+    return this.prisma.user.findMany({
+      where: {
+        role: 'Patient',
+        gender: 'male',
+      },
+    });
+  }
+
+  async getAllPatientsFemale() {
+    return this.prisma.user.findMany({
+      where: {
+        role: 'Patient',
+        gender: 'female',
+      },
+    });
+  }
+
   async getAllDoctors() {
     return this.prisma.user.findMany({
       where: {
         role: 'PCP',
-      },
-    });
-  }
-
-  async getAllUsersByGender(gender: string) {
-    return this.prisma.user.findMany({
-      where: {
-        gender,
-      },
-    });
-  }
-
-  async getAllUsersByAge(age: number) {
-    return this.prisma.user.findMany({
-      where: {
-        age,
       },
     });
   }
