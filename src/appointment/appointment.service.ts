@@ -52,16 +52,16 @@ export class AppointmentsService {
     });
   }
 
-  async getAppointmentsForSpecificDoctor(id: string) {
+  async getAppointmentForSpecificDoctor(id: string) {
     // Replace id by doctor id
     return this.prisma.appointment.findUnique({ where: { id } });
   }
 
-  async getAppointmentsForSpecificPatient(id: string) {
+  async getAppointmentForSpecificPatient(id: string) {
     // Replace id by doctor id
     return this.prisma.appointment.findUnique({ where: { id } });
   }
-  
+
   async getAppointmentsForSpecificDoctor(doctorId: string) {
     return this.prisma.appointment.findMany({
       where: {
