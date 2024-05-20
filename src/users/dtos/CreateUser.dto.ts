@@ -24,4 +24,8 @@ export class CreateUserDto {
   @IsNumber()
   @IsNotEmpty()
   ssn: number;
+
+  @IsString()
+  @IsNotEmpty()
+  contactInfo: string;
 }
