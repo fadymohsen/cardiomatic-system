@@ -41,4 +41,24 @@ export class UsersController {
     if (!user) throw new HttpException('User Not Found by This SSN', 404);
     return this.usersService.deleteUserBySSN(ssn);
   }
+
+  @Get('patients')
+  async getAllPatients() {
+    return this.userService.getAllPatients();
+  }
+
+  @Get('doctors')
+  async getAllDoctors() {
+    return this.userService.getAllDoctors();
+  }
+
+  @Get('by-gender')
+  async getAllUsersByGender(@Query('gender') gender: string) {
+    return this.userService.getAllUsersByGender(gender);
+  }
+
+  @Get('by-age')
+  async getAllUsersByAge(@Query('age') age: number) {
+    return this.userService.getAllUsersByAge(age);
+  }
 }

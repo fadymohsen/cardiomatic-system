@@ -97,18 +97,35 @@ export class UsersService {
     return this.prisma.user.delete({ where: { ssn } });
   }
 
-  getAllPatients() {
-    return this.prisma.user.findMany();
+  async getAllPatients() {
+    return this.prisma.user.findMany({
+      where: {
+        role: 'Patient',
+      },
+    });
   }
 
-  getAllDoctors() {
-    return this.prisma.user.findMany();
+  async getAllDoctors() {
+    return this.prisma.user.findMany({
+      where: {
+        role: 'PCP',
+      },
+    });
   }
 
-  getallUsersByGender() {
-    return this.prisma.user.findMany();
+  async getAllUsersByGender(gender: string) {
+    return this.prisma.user.findMany({
+      where: {
+        gender,
+      },
+    });
   }
-  getallUsersByAge() {
-    return this.prisma.user.findMany();
+
+  async getAllUsersByAge(age: number) {
+    return this.prisma.user.findMany({
+      where: {
+        age,
+      },
+    });
   }
 }
