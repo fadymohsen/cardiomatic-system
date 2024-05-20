@@ -9,10 +9,10 @@ import {
   Param,
   ParseIntPipe,
   HttpException,
-  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
+import { User } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -43,23 +43,23 @@ export class UsersController {
     return this.usersService.deleteUserBySSN(ssn);
   }
 
-  @Get('patients')
-  async getAllPatients() {
+  @Get('users/patients')
+  async getUsersWithPCPRole(): Promise<User[]> {
     return this.usersService.getAllPatients();
   }
 
-  @Get('doctors')
-  async getAllDoctors() {
+  @Get('users/pcp')
+  async getUsersWithPatientRole(): Promise<User[]> {
     return this.usersService.getAllDoctors();
   }
 
-  @Get('by-gender')
-  async getAllUsersByGender(@Query('gender') gender: string) {
-    return this.usersService.getAllUsersByGender(gender);
+  @Get('users/patients/male')
+  async getAllUsersByGender() {
+    return this.usersService.getAllPatientsMale();
   }
 
-  @Get('by-age')
-  async getAllUsersByAge(@Query('age') age: number) {
-    return this.usersService.getAllUsersByAge(age);
+  @Get('users/patients/female')
+  async getAllUsersByAge() {
+    return this.usersService.getAllPatientsFemale();
   }
 }
