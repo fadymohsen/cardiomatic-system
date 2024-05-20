@@ -10,27 +10,27 @@ import {
   ParseIntPipe,
   HttpException,
 } from '@nestjs/common';
-import { MedicalRecordService } from './medical-record.service';
-import { MedicalRecordDto } from './dtos/MedicalRecord.dto';
+import { MedicalRecordsService } from './medical-record.service';
+import { CreateMedicalRecordDto } from './dtos/MedicalRecord.dto';
 
 @Controller('medical-record')
 export class MedicalRecordController {
-  constructor(private medicalRecordService: MedicalRecordService) {}
+  constructor(private medicalRecordService: MedicalRecordsService) {}
 
   @Post()
   @UsePipes(ValidationPipe)
-  createMedicalRecord(@Body() medicalRecordDto: MedicalRecordDto) {
-    return this.medicalRecordService.createMedicalRecord(medicalRecordDto);
+  createMedicalRecord(@Body() medicalRecordDto: CreateMedicalRecordDto) {
+    return this.medicalRecordService.create(medicalRecordDto);
   }
 
   @Get()
   getMedicalRecords() {
-    return this.medicalRecordService.getMedicalRecords();
+    return this.medicalRecordService.findAll();
   }
 
   @Get(':recordId')
   async getByRecordId(@Param('recordId', ParseIntPipe) recordId: string) {
-    const user = await this.medicalRecordService.getMedicalRecordById(recordId);
+    const user = await this.medicalRecordService.findOne(recordId);
     if (!user) throw new HttpException('User Not Found by This SSN', 404);
     return user;
   }
@@ -39,8 +39,8 @@ export class MedicalRecordController {
   async deleteMedicalRecordById(
     @Param('recordId', ParseIntPipe) recordId: string,
   ) {
-    const user = await this.medicalRecordService.getMedicalRecordById(recordId);
+    const user = await this.medicalRecordService.findOne(recordId);
     if (!user) throw new HttpException('User Not Found by This SSN', 404);
-    return this.medicalRecordService.deleteMedicalRecordById(recordId);
+    return this.medicalRecordService.remove(recordId);
   }
 }

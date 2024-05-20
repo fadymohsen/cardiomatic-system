@@ -1,53 +1,38 @@
-// src/medical-record/dto/medical-record.dto.ts
 import {
-  IsString,
+  IsArray,
   IsBoolean,
   IsDateString,
-  IsArray,
-  IsOptional,
+  IsString,
+  IsUUID,
 } from 'class-validator';
 
-export class MedicalRecordDto {
-  @IsString()
-  patientId: string;
-
-  @IsString()
-  pcpId: string;
-
+export class CreateMedicalRecordDto {
   @IsDateString()
-  date: Date;
+  date: string;
 
-  @IsString()
-  symptoms: string;
+  @IsArray()
+  @IsString({ each: true })
+  diseases: string[];
 
-  @IsString()
-  allergies: string;
+  @IsArray()
+  @IsString({ each: true })
+  allergies: string[];
 
-  @IsString()
-  currentSmokingStatus: string;
+  @IsBoolean()
+  smokingStatus: boolean;
 
   @IsBoolean()
   alcoholIntake: boolean;
 
-  @IsString()
-  diagnosis: string;
+  @IsUUID()
+  doctorId: string;
 
-  @IsString()
-  treatmentPlan: string;
+  @IsDateString()
+  scheduledAt: string;
 
-  @IsArray()
-  @IsOptional()
-  prescriptions?: string[];
+  @IsUUID()
+  userId?: string;
 
-  @IsArray()
-  @IsOptional()
-  diagnoses?: string[];
-
-  @IsArray()
-  @IsOptional()
-  tests?: string[];
-
-  @IsArray()
-  @IsOptional()
-  treatments?: string[];
+  @IsUUID()
+  patientPatientId?: string;
 }

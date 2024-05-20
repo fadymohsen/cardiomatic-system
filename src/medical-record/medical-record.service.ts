@@ -1,65 +1,55 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { MedicalRecordDto } from './dtos/MedicalRecord.dto';
-import { MedicalRecord, Prisma } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/Prisma/prisma.service';
+import { MedicalRecord } from '@prisma/client';
+import { CreateMedicalRecordDto } from './dtos/MedicalRecord.dto';
 
 @Injectable()
-export class MedicalRecordService {
+export class MedicalRecordsService {
   constructor(private prisma: PrismaService) {}
 
-  async createMedicalRecord(data: MedicalRecordDto): Promise<MedicalRecord> {
-    try {
-      const medicalRecordData: Prisma.MedicalRecordCreateInput = {
-        patient: { connect: { patientId: data.patientId } },
-        pcp: { connect: { pcpId: data.pcpId } },
-        date: data.date,
-        symptoms: data.symptoms,
-        allergies: data.allergies,
-        currentSmokingStatus: data.currentSmokingStatus,
-        alcoholIntake: data.alcoholIntake,
-        diagnosis: data.diagnosis,
-        treatmentPlan: data.treatmentPlan,
-        prescriptions: {
-          connect:
-            data.prescriptions?.map((id) => ({ prescriptionId: id })) || [],
-        },
-        diagnoses: {
-          connect: data.diagnoses?.map((id) => ({ diagnosisId: id })) || [],
-        },
-        tests: {
-          connect: data.tests?.map((id) => ({ testId: id })) || [],
-        },
-        treatments: {
-          connect: data.treatments?.map((id) => ({ treatmentId: id })) || [],
-        },
-      };
+  async create(data: CreateMedicalRecordDto): Promise<MedicalRecord> {
+    const {
+      date,
+      diseases,
+      allergies,
+      smokingStatus,
+      alcoholIntake,
+      doctorId,
+      scheduledAt,
+      userId,
+      patientPatientId,
+    } = data;
 
-      return await this.prisma.medicalRecord.create({
-        data: medicalRecordData,
-      });
-    } catch (error) {
-      console.error('Error creating medical record:', error);
-      throw new HttpException('Error creating medical record.', 500);
-    }
-  }
-
-  async getMedicalRecords(): Promise<MedicalRecord[]> {
-    return this.prisma.medicalRecord.findMany();
-  }
-
-  async getMedicalRecordById(recordId: string): Promise<MedicalRecord | null> {
-    return this.prisma.medicalRecord.findUnique({
-      where: { recordId },
+    return this.prisma.medicalRecord.create({
+      data: {
+        date: new Date(date),
+        diseases,
+        allergies,
+        smokingStatus,
+        alcoholIntake,
+        doctor: { connect: { pcpId: doctorId } },
+        scheduledAt: new Date(scheduledAt),
+        user: userId ? { connect: { userId } } : undefined,
+        Patient: patientPatientId
+          ? { connect: { patientId: patientPatientId } }
+          : undefined,
+      },
     });
   }
 
-  async deleteMedicalRecordById(recordId: string): Promise<void> {
-    const findMedicalRecord = await this.getMedicalRecordById(recordId);
-    if (!findMedicalRecord)
-      throw new HttpException(
-        'Medical record not found.',
-        HttpStatus.NOT_FOUND,
-      );
-    await this.prisma.medicalRecord.delete({ where: { recordId } });
+  async findAll(): Promise<MedicalRecord[]> {
+    return this.prisma.medicalRecord.findMany();
+  }
+
+  async findOne(id: string): Promise<MedicalRecord | null> {
+    return this.prisma.medicalRecord.findUnique({
+      where: { id },
+    });
+  }
+
+  async remove(id: string): Promise<MedicalRecord> {
+    return this.prisma.medicalRecord.delete({
+      where: { id },
+    });
   }
 }
