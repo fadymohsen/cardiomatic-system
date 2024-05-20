@@ -15,10 +15,10 @@ model User {
   password    String
   gender      String
   age         Int
-  patient     Patient?   @relation(fields: [patientId], references: [patientId])
-  patientId   String
-  physician   Physician? @relation(fields: [physicianId], references: [physicianId])
-  physicianId String
+  // patient     Patient?   @relation(fields: [patientId], references: [patientId])
+  // patientId   String
+  // physician   Physician? @relation(fields: [physicianId], references: [physicianId])
+  // physicianId String
 }
 
 model Patient {
@@ -31,7 +31,7 @@ model Patient {
   role           Role            @default(Patient)
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
-  User           User[]
+  // User           User[]
   Invoice        Invoice[]
 }
 
@@ -43,7 +43,7 @@ model Physician {
   role           Role            @default(PCP)
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
-  User           User[]
+  // User           User[]
   Invoice        Invoice[]
   Prescription   Prescription[]
 }
