@@ -1,24 +1,18 @@
+// src/medical-record/dto/medical-record.dto.ts
 import {
   IsString,
   IsBoolean,
   IsDateString,
-  IsUUID,
+  IsArray,
   IsOptional,
 } from 'class-validator';
-import { PrescriptionDto } from 'src/prescription/dtos/prescription.dto';
-import { DiagnosisDto } from 'src/diagnosis/dtos/Diagnosis.dto';
-import { TestDto } from 'src/test/dtos/Test.dto';
-import { TreatmentDto } from 'src/treatment/dtos/Treatment.dto';
 
 export class MedicalRecordDto {
-  @IsUUID()
-  recordId: string;
-
   @IsString()
   patientId: string;
 
   @IsString()
-  physicianId: string;
+  pcpId: string;
 
   @IsDateString()
   date: Date;
@@ -41,15 +35,19 @@ export class MedicalRecordDto {
   @IsString()
   treatmentPlan: string;
 
+  @IsArray()
   @IsOptional()
-  prescriptions: PrescriptionDto[];
+  prescriptions?: string[];
 
+  @IsArray()
   @IsOptional()
-  diagnoses: DiagnosisDto[];
+  diagnoses?: string[];
 
+  @IsArray()
   @IsOptional()
-  tests: TestDto[];
+  tests?: string[];
 
+  @IsArray()
   @IsOptional()
-  treatments: TreatmentDto[];
+  treatments?: string[];
 }
