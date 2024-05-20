@@ -44,6 +44,7 @@ model Patient {
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
   prescription   Prescription[]
+  bills          Bill[]
   user           User[]
   role           Role            @default(Patient)
 }
@@ -120,8 +121,35 @@ model Prescription {
   patientPatientId String?
 }
 
+model Bill {
+  billId      String    @id @default(uuid())
+  amount      Float
+  dueDate     DateTime
+  status      String    @default("unpaid")
+  patient     Patient   @relation(fields: [patientId], references: [patientId])
+  patientId   String
+  payments    Payment[]
+}
+
+model Payment {
+  paymentId    String          @id @default(uuid())
+  amount       Float
+  date         DateTime        @default(now())
+  method       PaymentMethod
+  status       String          @default("unpaid")
+  creditNumber String?
+  creditPassword String?
+  bill         Bill            @relation(fields: [billId], references: [billId])
+  billId       String
+}
+
 enum Role {
   Patient
   PCP
   Admin
+}
+
+enum PaymentMethod {
+  CASH
+  CREDIT_CARD
 }
