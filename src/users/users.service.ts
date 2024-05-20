@@ -96,4 +96,19 @@ export class UsersService {
     if (!findUser) throw new HttpException('User Not Found by This SSN', 404);
     return this.prisma.user.delete({ where: { ssn } });
   }
+
+  getAllPatients() {
+    return this.prisma.user.findMany();
+  }
+
+  getAllDoctors() {
+    return this.prisma.user.findMany();
+  }
+
+  getallUsersByGender() {
+    return this.prisma.user.findMany();
+  }
+  getallUsersByAge() {
+    return this.prisma.user.findMany();
+  }
 }
