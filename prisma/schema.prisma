@@ -59,24 +59,24 @@ model Appointment {
   physicianId   String
 }
 
-model MedicalRecord {
-  recordId             String         @id @default(uuid())
-  patient              Patient        @relation(fields: [patientId], references: [patientId])
-  patientId            String
-  physician            Physician      @relation(fields: [physicianId], references: [physicianId])
-  physicianId          String
-  date                 DateTime       @default(now())
-  symptoms             String
-  allergies            String
-  currentSmokingStatus String
-  alcholIntake         Boolean
-  diagnosis            String
-  treatmentPlan        String
-  prescriptions        Prescription[]
-  diagnoses            Diagnosis[]
-  tests                Test[]
-  treatments           Treatment[]
-}
+  model MedicalRecord {
+    recordId             String         @id @default(uuid())
+    patient              Patient        @relation(fields: [patientId], references: [patientId])
+    patientId            String
+    physician            Physician      @relation(fields: [physicianId], references: [physicianId])
+    physicianId          String
+    date                 DateTime       @default(now())
+    symptoms             String
+    allergies            String
+    currentSmokingStatus String
+    alcoholIntake        Boolean
+    diagnosis            String
+    treatmentPlan        String
+    prescriptions        Prescription[]
+    diagnoses            Diagnosis[]
+    tests                Test[]
+    treatments           Treatment[]
+  }
 
 model Prescription {
   prescriptionId String        @id @default(uuid())
