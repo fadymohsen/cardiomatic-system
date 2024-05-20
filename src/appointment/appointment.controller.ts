@@ -28,14 +28,16 @@ export class AppointmentsController {
   }
 
   @Get('doctor/:doctorId')
-  async getAppointmentForSpecificDoctor(@Param('doctorId') doctorId: string) {
-    return this.appointmentsService.getAppointmentForSpecificDoctor(doctorId);
+  async getAppointmentsForSpecificDoctor(@Param('doctorId') doctorId: string) {
+    return this.appointmentsService.getAppointmentsForSpecificDoctor(doctorId);
   }
 
   @Get('patient/:patientId')
-  async getAppointmentForSpecificPatient(
+  async getAppointmentsForSpecificPatient(
     @Param('patientId') patientId: string,
   ) {
-    return this.appointmentsService.getAppointmentForSpecificPatient(patientId);
+    return this.appointmentsService.getAppointmentsForSpecificPatient(
+      patientId,
+    );
   }
 }
