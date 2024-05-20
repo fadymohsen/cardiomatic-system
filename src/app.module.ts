@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { MedicalRecordsModule } from './medical-record/medical-record.module';
 import { AppointmentsModule } from './appointment/appointment.module';
 import { PrescriptionModule } from './prescription/prescription.module';
+import { BillingModule } from './billing/billing.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PrescriptionModule } from './prescription/prescription.module';
     MedicalRecordsModule,
     AppointmentsModule,
     PrescriptionModule,
+    BillingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
