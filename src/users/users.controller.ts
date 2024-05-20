@@ -9,6 +9,7 @@ import {
   Param,
   ParseIntPipe,
   HttpException,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
@@ -44,21 +45,21 @@ export class UsersController {
 
   @Get('patients')
   async getAllPatients() {
-    return this.userService.getAllPatients();
+    return this.usersService.getAllPatients();
   }
 
   @Get('doctors')
   async getAllDoctors() {
-    return this.userService.getAllDoctors();
+    return this.usersService.getAllDoctors();
   }
 
   @Get('by-gender')
   async getAllUsersByGender(@Query('gender') gender: string) {
-    return this.userService.getAllUsersByGender(gender);
+    return this.usersService.getAllUsersByGender(gender);
   }
 
   @Get('by-age')
   async getAllUsersByAge(@Query('age') age: number) {
-    return this.userService.getAllUsersByAge(age);
+    return this.usersService.getAllUsersByAge(age);
   }
 }
