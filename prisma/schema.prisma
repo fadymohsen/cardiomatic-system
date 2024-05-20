@@ -20,6 +20,7 @@ model User {
   MedicalHistory String?         @default("")
   appointment    Appointment[]
   medicalRecords MedicalRecord[]
+  prescription   Prescription[]
   //Roles
   role           Role            @default(Patient)
   patient        Patient?        @relation(fields: [patientId], references: [patientId])
@@ -42,6 +43,7 @@ model Patient {
   MedicalHistory String
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
+  prescription   Prescription[]
   user           User[]
   role           Role            @default(Patient)
 }
@@ -58,6 +60,7 @@ model PCP {
   role           Role            @default(PCP)
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
+  prescription   Prescription[]
   user           User[]
 }
 
@@ -88,12 +91,26 @@ model Appointment {
 }
 
 model MedicalRecord {
-  id               String      @id @default(uuid())
+  id               String   @id @default(uuid())
   date             DateTime
   diseases         String[]
   allergies        String[]
   smokingStatus    Boolean
   alcoholIntake    Boolean
+  doctor           PCP      @relation(fields: [doctorId], references: [pcpId])
+  doctorId         String
+  scheduledAt      DateTime
+  user             User?    @relation(fields: [userId], references: [userId])
+  userId           String?
+  Patient          Patient? @relation(fields: [patientPatientId], references: [patientId])
+  patientPatientId String?
+}
+
+model Prescription {
+  id               String   @id @default(uuid())
+  date             DateTime
+  diseases         String[]
+  medications      String[]
   doctor           PCP      @relation(fields: [doctorId], references: [pcpId])
   doctorId         String
   scheduledAt      DateTime
