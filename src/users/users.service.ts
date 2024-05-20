@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/Prisma/prisma.service';
 
@@ -10,7 +10,17 @@ export class UsersService {
     return this.prisma.user.create({ data });
   }
 
-  getUsers() {}
+  getUsers() {
+    return this.prisma.user.findMany();
+  }
 
-  getUserByID() {}
+  getUserBySSN(ssn: number) {
+    return this.prisma.user.findUnique({ where: { ssn } });
+  }
+
+  async deleteUserBySSN(ssn: number) {
+    const findUser = await this.getUserBySSN(ssn);
+    if (!findUser) throw new HttpException('User Not Found by This SSN', 404);
+    return this.prisma.user.delete({ where: { ssn } });
+  }
 }

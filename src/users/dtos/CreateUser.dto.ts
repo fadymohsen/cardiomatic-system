@@ -20,4 +20,8 @@ export class CreateUserDto {
   @IsNumber()
   @Min(0)
   age: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  ssn: number;
 }

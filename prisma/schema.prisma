@@ -15,6 +15,7 @@ model User {
   password    String
   gender      String
   age         Int
+  ssn         Int        @unique
   // patient     Patient?   @relation(fields: [patientId], references: [patientId])
   // patientId   String
   // physician   Physician? @relation(fields: [physicianId], references: [physicianId])
