@@ -61,4 +61,20 @@ export class AppointmentsService {
     // Replace id by doctor id
     return this.prisma.appointment.findUnique({ where: { id } });
   }
+  
+  async getAppointmentsForSpecificDoctor(doctorId: string) {
+    return this.prisma.appointment.findMany({
+      where: {
+        doctorId,
+      },
+    });
+  }
+
+  async getAppointmentsForSpecificPatient(patientId: string) {
+    return this.prisma.appointment.findMany({
+      where: {
+        patientId,
+      },
+    });
+  }
 }
