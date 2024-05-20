@@ -2,6 +2,7 @@
 import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
 import { AppointmentsService } from './appointment.service';
 import { CreateAppointmentDto } from './dtos/Appointment.dto';
+import { Appointment } from '@prisma/client';
 
 @Controller('appointments')
 export class AppointmentsController {
@@ -27,17 +28,15 @@ export class AppointmentsController {
     return this.appointmentsService.remove(id);
   }
 
-  @Get('doctor/:doctorId')
-  async getAppointmentsForSpecificDoctor(@Param('doctorId') doctorId: string) {
-    return this.appointmentsService.getAppointmentsForSpecificDoctor(doctorId);
-  }
-
-  @Get('patient/:patientId')
-  async getAppointmentsForSpecificPatient(
-    @Param('patientId') patientId: string,
-  ) {
-    return this.appointmentsService.getAppointmentsForSpecificPatient(
-      patientId,
+  @Get('user/:userId/:userType')
+  async getAppointmentsForSpecificUser(
+    @Param('userId') userId: string,
+    @Param('userType') userType: string,
+  ): Promise<Appointment[]> {
+    const isDoctor = userType.toLowerCase() === 'doctor';
+    return this.appointmentsService.getAppointmentsForSpecificUser(
+      userId,
+      isDoctor,
     );
   }
 }

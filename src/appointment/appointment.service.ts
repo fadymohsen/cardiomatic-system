@@ -52,19 +52,15 @@ export class AppointmentsService {
     });
   }
 
-  async getAppointmentsForSpecificDoctor(doctorId: string) {
+  async getAppointmentsForSpecificUser(
+    userId: string,
+    isDoctor: boolean,
+  ): Promise<Appointment[]> {
+    const whereCondition = isDoctor
+      ? { doctorId: userId }
+      : { patientId: userId };
     return this.prisma.appointment.findMany({
-      where: {
-        doctorId,
-      },
-    });
-  }
-
-  async getAppointmentsForSpecificPatient(patientId: string) {
-    return this.prisma.appointment.findMany({
-      where: {
-        patientId,
-      },
+      where: whereCondition,
     });
   }
 }
