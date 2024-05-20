@@ -16,7 +16,10 @@ model User {
   age            Int
   email          String       @unique
   password       String
-  MedicalHistory String       @default("")
+  // Customized Attributes
+  MedicalHistory String?       @default("")
+  appointment    Appointment[]
+  //Roles
   role           Role         @default(Patient)
   patient        Patient?     @relation(fields: [patientId], references: [patientId])
   patientId      String?
@@ -74,14 +77,17 @@ model Admin {
 }
 
 model Appointment {
-  appointmentId String    @id @default(uuid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  patient       Patient   @relation(fields: [patientId], references: [patientId])
-  patientId     String
-  pcp           PCP       @relation(fields: [pcpId], references: [pcpId])
-  pcpId         String
+  id          String    @id @default(uuid())
+  patient     Patient   @relation(fields: [patientId], references: [patientId])
+  patientId   String
+  doctor      PCP       @relation(fields: [doctorId], references: [pcpId])
+  doctorId    String
+  scheduledAt DateTime
+  user        User?     @relation(fields: [userId], references: [userId])
+  userId      String?
 }
+
+
 
 model MedicalRecord {
   recordId             String         @id @default(uuid())
