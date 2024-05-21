@@ -23,7 +23,14 @@ export class AppointmentsService {
   }
 
   async findAppointments() {
-    return this.prisma.appointment.findMany();
+    return this.prisma.appointment.findMany({
+      select: {
+        scheduledAt: true,
+        status: true,
+        patientId: true,
+        doctorId: true,
+      },
+    });
   }
 
   async findOne(id: string) {
