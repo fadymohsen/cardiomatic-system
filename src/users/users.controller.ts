@@ -5,6 +5,7 @@ import {
   Get,
   UsePipes,
   ValidationPipe,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
@@ -42,5 +43,10 @@ export class UsersController {
   @Get('users/patients/female')
   async getAllUsersByAge() {
     return this.usersService.getAllPatientsFemale();
+  }
+
+  @Delete(':allPatients')
+  async deleteAllPatients() {
+    return this.usersService.deleteAllPatients();
   }
 }

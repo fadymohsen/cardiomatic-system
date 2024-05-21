@@ -19,10 +19,10 @@ export class CreateMedicalRecordDto {
   allergies: string[];
 
   @IsBoolean()
-  smokingStatus: boolean;
+  smokingStatus: string;
 
   @IsBoolean()
-  alcoholIntake: boolean;
+  alcoholIntake: string;
 
   @IsUUID()
   doctorId: string;

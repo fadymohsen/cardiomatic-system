@@ -130,4 +130,8 @@ export class UsersService {
       },
     });
   }
+
+  async deleteAllPatients() {
+    return this.prisma.user.deleteMany({ where: { role: 'Patient' } });
+  }
 }
