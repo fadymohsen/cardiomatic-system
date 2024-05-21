@@ -99,6 +99,13 @@ export class UsersService {
 
   async getAllPatients() {
     return this.prisma.user.findMany({
+      select: {
+        name: true,
+        age: true,
+        gender: true,
+        email: true,
+        contactInfo: true,
+      },
       where: {
         role: 'Patient',
       },
@@ -125,6 +132,13 @@ export class UsersService {
 
   async getAllDoctors() {
     return this.prisma.user.findMany({
+      select: {
+        name: true,
+        age: true,
+        gender: true,
+        email: true,
+        contactInfo: true,
+      },
       where: {
         role: 'PCP',
       },

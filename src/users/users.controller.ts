@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/CreateUser.dto';
-import { User } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -44,12 +43,12 @@ export class UsersController {
   }
 
   @Get('users/patients')
-  async getUsersWithPCPRole(): Promise<User[]> {
+  async getUsersWithPCPRole() {
     return this.usersService.getAllPatients();
   }
 
   @Get('users/pcp')
-  async getUsersWithPatientRole(): Promise<User[]> {
+  async getUsersWithPatientRole() {
     return this.usersService.getAllDoctors();
   }
 
