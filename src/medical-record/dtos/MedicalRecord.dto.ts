@@ -1,10 +1,4 @@
-import {
-  IsArray,
-  IsBoolean,
-  IsDateString,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsArray, IsDateString, IsString, IsUUID } from 'class-validator';
 
 export class CreateMedicalRecordDto {
   @IsDateString()
@@ -18,10 +12,10 @@ export class CreateMedicalRecordDto {
   @IsString({ each: true })
   allergies: string[];
 
-  @IsBoolean()
+  @IsString()
   smokingStatus: string;
 
-  @IsBoolean()
+  @IsString()
   alcoholIntake: string;
 
   @IsUUID()
@@ -34,5 +28,5 @@ export class CreateMedicalRecordDto {
   userId?: string;
 
   @IsUUID()
-  patientPatientId?: string;
+  patientId: string; // Ensure this field is required
 }

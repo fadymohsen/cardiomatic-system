@@ -22,12 +22,6 @@ model User {
   prescription   Prescription[]
   //Roles
   role           Role            @default(Patient)
-  patient        Patient?        @relation(fields: [patientId], references: [patientId])
-  patientId      String?
-  pcp            PCP?            @relation(fields: [pcpId], references: [pcpId])
-  pcpId          String?
-  admin          Admin?          @relation(fields: [adminId], references: [adminId])
-  adminId        String?
 }
 
 model Patient {
@@ -43,7 +37,6 @@ model Patient {
   medicalRecords MedicalRecord[]
   prescription   Prescription[]
   bills          Bill[]
-  user           User[]
   role           Role            @default(Patient)
 }
 
@@ -59,7 +52,6 @@ model PCP {
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
   prescription   Prescription[]
-  user           User[]
 }
 
 model Admin {
@@ -71,7 +63,6 @@ model Admin {
   gender       String
   dateOfBirth  String?
   appointments Appointment[]
-  user         User[]
 }
 
 model Appointment {
@@ -90,19 +81,19 @@ model Appointment {
 }
 
 model MedicalRecord {
-  id               String   @id @default(uuid())
-  date             DateTime
-  diseases         String[]
-  allergies        String[]
-  smokingStatus    String
-  alcoholIntake    String
-  doctor           PCP      @relation(fields: [doctorId], references: [pcpId])
-  doctorId         String
-  scheduledAt      DateTime
-  user             User?    @relation(fields: [userId], references: [userId])
-  userId           String?
-  Patient          Patient? @relation(fields: [patientPatientId], references: [patientId])
-  patientPatientId String?
+  id            String   @id @default(uuid())
+  date          DateTime
+  diseases      String[]
+  allergies     String[]
+  smokingStatus String
+  alcoholIntake String
+  doctor        PCP      @relation(fields: [doctorId], references: [pcpId])
+  doctorId      String
+  scheduledAt   DateTime
+  user          User?    @relation(fields: [userId], references: [userId])
+  userId        String?
+  Patient       Patient? @relation(fields: [patientId], references: [patientId])
+  patientId     String?
 }
 
 model Prescription {

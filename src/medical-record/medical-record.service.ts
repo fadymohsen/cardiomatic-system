@@ -17,8 +17,17 @@ export class MedicalRecordsService {
       doctorId,
       scheduledAt,
       userId,
-      patientPatientId,
+      patientId,
     } = data;
+
+    // Verify that the patient exists
+    const patientExists = await this.prisma.patient.findUnique({
+      where: { patientId: patientId },
+    });
+
+    if (!patientExists) {
+      throw new Error(`Patient with id ${patientId} does not exist`);
+    }
 
     return this.prisma.medicalRecord.create({
       data: {
@@ -30,9 +39,7 @@ export class MedicalRecordsService {
         doctor: { connect: { pcpId: doctorId } },
         scheduledAt: new Date(scheduledAt),
         user: userId ? { connect: { userId } } : undefined,
-        Patient: patientPatientId
-          ? { connect: { patientId: patientPatientId } }
-          : undefined,
+        Patient: { connect: { patientId: patientId } }, // Correct the relationship connection here
       },
     });
   }
