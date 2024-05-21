@@ -80,8 +80,10 @@ model Admin {
 
 model Appointment {
   id           String            @id @default(uuid())
-  scheduledAt  DateTime
+  scheduledAt  DateTime          @default(now()) @updatedAt
   status       AppointmentStatus @default(UPCOMING)
+  patientName  String            @default("")
+  doctorName   String            @default("")
   patient      Patient           @relation(fields: [patientId], references: [patientId])
   patientId    String
   doctor       PCP               @relation(fields: [doctorId], references: [pcpId])
