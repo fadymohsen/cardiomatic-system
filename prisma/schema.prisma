@@ -78,8 +78,7 @@ model Appointment {
   id           String            @id @default(uuid())
   scheduledAt  DateTime          @default(now()) @updatedAt
   status       AppointmentStatus @default(UPCOMING)
-  patientName  String            @default("")
-  doctorName   String            @default("")
+  doctorName   String?           @default("Dr. Mahmoud")
   patient      Patient           @relation(fields: [patientId], references: [patientId])
   patientId    String
   doctor       PCP               @relation(fields: [doctorId], references: [pcpId])
