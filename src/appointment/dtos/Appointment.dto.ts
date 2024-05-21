@@ -17,4 +17,10 @@ export class UpdateAppointmentDto {
 
   @IsDateString()
   readonly scheduledAt?: Date;
+
+  @IsString()
+  patientName: string;
+
+  @IsString()
+  doctorName: string;
 }

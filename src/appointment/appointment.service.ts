@@ -27,7 +27,7 @@ export class AppointmentsService {
       select: {
         scheduledAt: true,
         status: true,
-        patientId: true,
+        doctorName: true,
         doctorId: true,
       },
     });

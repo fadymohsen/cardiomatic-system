@@ -140,6 +140,7 @@ export class UsersService {
     return users.map((user) => ({
       email: user.email,
       password: user.password,
+      role: user.role,
     }));
   }
 }
