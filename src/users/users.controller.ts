@@ -49,4 +49,9 @@ export class UsersController {
   async deleteAllPatients() {
     return this.usersService.deleteAllPatients();
   }
+
+  @Get('login')
+  async getLoginDetails() {
+    return this.usersService.getLoginDetails();
+  }
 }
