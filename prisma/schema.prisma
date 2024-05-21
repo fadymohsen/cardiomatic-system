@@ -79,15 +79,16 @@ model Admin {
 }
 
 model Appointment {
-  id           String   @id @default(uuid())
+  id           String            @id @default(uuid())
   scheduledAt  DateTime
-  patient      Patient  @relation(fields: [patientId], references: [patientId])
+  status       AppointmentStatus @default(UPCOMING)
+  patient      Patient           @relation(fields: [patientId], references: [patientId])
   patientId    String
-  doctor       PCP      @relation(fields: [doctorId], references: [pcpId])
+  doctor       PCP               @relation(fields: [doctorId], references: [pcpId])
   doctorId     String
-  user         User?    @relation(fields: [userId], references: [userId])
+  user         User?             @relation(fields: [userId], references: [userId])
   userId       String?
-  Admin        Admin?   @relation(fields: [adminAdminId], references: [adminId])
+  Admin        Admin?            @relation(fields: [adminAdminId], references: [adminId])
   adminAdminId String?
 }
 
@@ -142,4 +143,9 @@ enum Role {
 enum PaymentMethod {
   CASH
   CREDIT_CARD
+}
+
+enum AppointmentStatus {
+  PREVIOUS
+  UPCOMING
 }
