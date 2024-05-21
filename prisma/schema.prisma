@@ -30,7 +30,6 @@ model User {
   adminId        String?
 }
 
-
 model Patient {
   patientId      String          @id @default(uuid())
   firstName      String?
@@ -65,12 +64,12 @@ model PCP {
 
 model Admin {
   adminId      String        @id @default(uuid())
-  firstName      String?
-  lastName       String?
-  email          String          @unique
-  password       String
-  gender         String
-  dateOfBirth    String?
+  firstName    String?
+  lastName     String?
+  email        String        @unique
+  password     String
+  gender       String
+  dateOfBirth  String?
   appointments Appointment[]
   user         User[]
 }
@@ -96,8 +95,8 @@ model MedicalRecord {
   date             DateTime
   diseases         String[]
   allergies        String[]
-  smokingStatus    Boolean
-  alcoholIntake    Boolean
+  smokingStatus    String
+  alcoholIntake    String
   doctor           PCP      @relation(fields: [doctorId], references: [pcpId])
   doctorId         String
   scheduledAt      DateTime
@@ -109,9 +108,11 @@ model MedicalRecord {
 
 model Prescription {
   id               String   @id @default(uuid())
-  date             DateTime
+  date             DateTime @default(now()) @updatedAt()
   diseases         String[]
   medications      String[]
+  title            String?
+  createdBy        String?
   doctor           PCP      @relation(fields: [doctorId], references: [pcpId])
   doctorId         String
   scheduledAt      DateTime

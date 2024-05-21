@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Prescription" ADD COLUMN     "CreatedBy" TEXT,
+ADD COLUMN     "title" TEXT,
+ALTER COLUMN "date" SET DEFAULT CURRENT_TIMESTAMP;
