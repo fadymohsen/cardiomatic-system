@@ -15,39 +15,37 @@ export class UsersService {
         await this.prisma.admin.create({
           data: {
             adminId: user.userId,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             password: user.password,
             gender: user.gender,
-            age: Number(user.age),
-            ssn: user.ssn,
-            contactInfo: user.contactInfo,
+            dateOfBirth: user.dateOfBirth,
           },
         });
       } else if (data.role === 'Patient') {
         await this.prisma.patient.create({
           data: {
             patientId: user.userId,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             password: user.password,
             gender: user.gender,
-            age: Number(user.age),
-            ssn: user.ssn,
-            contactInfo: user.contactInfo,
+            dateOfBirth: user.dateOfBirth,
             MedicalHistory: user.MedicalHistory,
           },
         });
       } else if (data.role === 'PCP') {
         await this.prisma.pCP.create({
           data: {
-            name: user.name,
+            pcpId: user.userId,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             password: user.password,
             gender: user.gender,
-            age: Number(user.age),
-            ssn: user.ssn,
-            contactInfo: user.contactInfo,
+            dateOfBirth: user.dateOfBirth,
           },
         });
       }
@@ -87,24 +85,13 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  getUserBySSN(ssn: number) {
-    return this.prisma.user.findUnique({ where: { ssn } });
-  }
-
-  async deleteUserBySSN(ssn: number) {
-    const findUser = await this.getUserBySSN(ssn);
-    if (!findUser) throw new HttpException('User Not Found by This SSN', 404);
-    return this.prisma.user.delete({ where: { ssn } });
-  }
-
   async getAllPatients() {
     return this.prisma.user.findMany({
       select: {
-        name: true,
-        age: true,
+        firstName: true,
+        dateOfBirth: true,
         gender: true,
         email: true,
-        contactInfo: true,
       },
       where: {
         role: 'Patient',
@@ -133,11 +120,10 @@ export class UsersService {
   async getAllDoctors() {
     return this.prisma.user.findMany({
       select: {
-        name: true,
-        age: true,
+        firstName: true,
+        dateOfBirth: true,
         gender: true,
         email: true,
-        contactInfo: true,
       },
       where: {
         role: 'PCP',

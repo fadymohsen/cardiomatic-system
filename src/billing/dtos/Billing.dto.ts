@@ -7,9 +7,6 @@ import {
 } from 'class-validator';
 
 export class BillDto {
-  @IsUUID()
-  billId: string;
-
   @IsNumber()
   amount: number;
 

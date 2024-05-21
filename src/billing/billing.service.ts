@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BillDto } from './dtos/Billing.dto';
 import { PrismaService } from 'src/Prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
@@ -11,8 +10,8 @@ export class BillService {
     return this.prisma.bill.create({ data });
   }
 
-  async findAll(): Promise<BillDto[]> {
-    return this.prisma.bill.findMany();
+  async findAll() {
+    return this.prisma.bill.findMany({});
   }
 
   async getBillById(billId: string) {
@@ -20,7 +19,7 @@ export class BillService {
       where: { billId },
     });
     if (!bill) {
-      throw new NotFoundException('bill not found');
+      throw new NotFoundException('Bill not found');
     }
     return bill;
   }
