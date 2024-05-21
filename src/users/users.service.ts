@@ -143,4 +143,30 @@ export class UsersService {
       role: user.role,
     }));
   }
+
+  async deleteUser(userId: string) {
+    try {
+      const deleteUserResult = await this.prisma.user.delete({
+        where: {
+          userId: userId,
+        },
+      });
+      return deleteUserResult;
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new HttpException(
+          'No user found with the provided ID',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      console.error('Error Deleting User:', error);
+      throw new HttpException(
+        'Internal server error while deleting user.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

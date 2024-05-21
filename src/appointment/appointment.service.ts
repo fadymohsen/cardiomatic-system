@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateAppointmentDto } from './dtos/Appointment.dto';
+import {
+  CreateAppointmentDto,
+  UpdateAppointmentDto,
+} from './dtos/Appointment.dto';
 import { Appointment } from '@prisma/client';
 
 @Injectable()
@@ -11,15 +14,68 @@ export class AppointmentsService {
     createAppointmentDto: CreateAppointmentDto,
   ): Promise<Appointment> {
     const { patientId, doctorId, scheduledAt } = createAppointmentDto;
+
+    // Fetch doctor's details
+    const doctor = await this.prisma.pCP.findUnique({
+      where: { pcpId: doctorId },
+    });
+
+    if (!doctor) {
+      throw new NotFoundException(`Doctor with ID ${doctorId} not found`);
+    }
+
+    const finalDoctorName = `Dr. ${doctor.firstName}`;
+
     const appointment = await this.prisma.appointment.create({
       data: {
         patientId,
         doctorId,
         scheduledAt,
+        doctorName: finalDoctorName,
       },
     });
 
     return appointment;
+  }
+
+  async update(
+    id: string,
+    updateAppointmentDto: UpdateAppointmentDto,
+  ): Promise<Appointment> {
+    const { patientId, doctorId, scheduledAt, doctorName } =
+      updateAppointmentDto;
+
+    const appointment = await this.prisma.appointment.findUnique({
+      where: { id },
+    });
+
+    if (!appointment) {
+      throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
+
+    // Fetch doctor's details if doctorId is being updated
+    let finalDoctorName = doctorName;
+    if (doctorId) {
+      const doctor = await this.prisma.pCP.findUnique({
+        where: { pcpId: doctorId },
+      });
+
+      if (!doctor) {
+        throw new NotFoundException(`Doctor with ID ${doctorId} not found`);
+      }
+
+      finalDoctorName = `Dr. ${doctor.firstName} ${doctor.lastName}`;
+    }
+
+    return this.prisma.appointment.update({
+      where: { id },
+      data: {
+        patientId,
+        doctorId,
+        scheduledAt,
+        doctorName: finalDoctorName || appointment.doctorName, // Preserve existing name if not updating
+      },
+    });
   }
 
   async findAppointments() {
@@ -29,6 +85,7 @@ export class AppointmentsService {
         status: true,
         doctorName: true,
         doctorId: true,
+        patientId: true,
       },
     });
   }

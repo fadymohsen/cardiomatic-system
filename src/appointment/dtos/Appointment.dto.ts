@@ -5,21 +5,18 @@ import { IsString, IsDateString } from 'class-validator';
 export class CreateAppointmentDto {
   readonly patientId: string;
   readonly doctorId: string;
-  readonly scheduledAt: Date;
+  scheduledAt: Date;
 }
 
 export class UpdateAppointmentDto {
   @IsString()
-  readonly patientId?: string;
+  patientId?: string;
 
   @IsString()
-  readonly doctorId?: string;
+  doctorId?: string;
 
   @IsDateString()
-  readonly scheduledAt?: Date;
-
-  @IsString()
-  patientName: string;
+  scheduledAt?: Date;
 
   @IsString()
   doctorName: string;
