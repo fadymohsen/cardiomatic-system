@@ -9,13 +9,12 @@ datasource db {
 
 model User {
   userId         String          @id @default(uuid())
-  name           String
-  ssn            Int             @unique
-  contactInfo    String
-  gender         String
-  age            Int
+  firstName      String?
+  lastName       String?
   email          String          @unique
   password       String
+  gender         String
+  dateOfBirth    String?
   // Customized Attributes
   MedicalHistory String?         @default("")
   appointment    Appointment[]
@@ -31,15 +30,15 @@ model User {
   adminId        String?
 }
 
+
 model Patient {
   patientId      String          @id @default(uuid())
-  name           String
-  ssn            Int             @unique
-  contactInfo    String
-  gender         String
-  age            Int
+  firstName      String?
+  lastName       String?
   email          String          @unique
   password       String
+  gender         String
+  dateOfBirth    String?
   MedicalHistory String
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
@@ -51,13 +50,12 @@ model Patient {
 
 model PCP {
   pcpId          String          @id @default(uuid())
-  name           String
-  ssn            Int             @unique
-  contactInfo    String
-  gender         String
-  age            Int
+  firstName      String?
+  lastName       String?
   email          String          @unique
   password       String
+  gender         String
+  dateOfBirth    String?
   role           Role            @default(PCP)
   appointments   Appointment[]
   medicalRecords MedicalRecord[]
@@ -67,13 +65,12 @@ model PCP {
 
 model Admin {
   adminId      String        @id @default(uuid())
-  name         String
-  ssn          Int           @unique
-  contactInfo  String
-  gender       String
-  age          Int
-  email        String        @unique
-  password     String
+  firstName      String?
+  lastName       String?
+  email          String          @unique
+  password       String
+  gender         String
+  dateOfBirth    String?
   appointments Appointment[]
   user         User[]
 }
@@ -127,10 +124,8 @@ model Prescription {
 model Bill {
   billId       String        @id @default(uuid())
   amount       Float
-  dueDate      DateTime
   method       PaymentMethod
   creditNumber String?
-  creditcvc    Int?
   status       String        @default("unpaid")
   patient      Patient       @relation(fields: [patientId], references: [patientId])
   patientId    String

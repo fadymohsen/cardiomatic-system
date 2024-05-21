@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Admin" ALTER COLUMN "dateOfBirth" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "PCP" ALTER COLUMN "dateOfBirth" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Patient" ALTER COLUMN "dateOfBirth" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "dateOfBirth" SET DATA TYPE TEXT;
